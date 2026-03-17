@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 from typing import Dict, Any
+import uuid
 
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
@@ -9,7 +10,13 @@ from fastapi.responses import JSONResponse
 
 from .config import get_settings
 from .logging_config import setup_logging
-from .schemas import ChatRequest, ChatResponse, UploadResponse, HealthResponse
+from .schemas import (
+    ChatRequest,
+    ChatResponse,
+    UploadResponse,
+    HealthResponse,
+    NewSessionResponse,
+)
 from .ingestion import ingest_document
 from .memory import append_message, get_history, mongo_available
 from .vectorstore import get_vectorstore
@@ -33,6 +40,14 @@ app.add_middleware(
 
 
 GRAPH = build_graph()
+
+
+@app.post("/session", response_model=NewSessionResponse)
+async def create_session() -> NewSessionResponse:
+    """Create a new chat session ID. Existing sessions remain intact."""
+    new_id = str(uuid.uuid4())
+    logger.info("Created new session id='%s'", new_id)
+    return NewSessionResponse(session_id=new_id)
 
 
 @app.get("/health", response_model=HealthResponse)

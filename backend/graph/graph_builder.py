@@ -175,7 +175,8 @@ def rewrite_query(state: GraphState) -> GraphState:
 def retrieve_documents(state: GraphState) -> GraphState:
     query = state.get("rewritten_query") or state["query"]
     session_id = state["session_id"]
-    docs = similarity_search(query, k=5, metadata_filter={"session_id": session_id})
+    # Use a slightly larger k to improve coverage for small but important fields
+    docs = similarity_search(query, k=8, metadata_filter={"session_id": session_id})
     logger.info("Retrieved %d candidate documents for query='%s'", len(docs), query)
     return {**state, "documents": docs}
 
@@ -183,6 +184,14 @@ def retrieve_documents(state: GraphState) -> GraphState:
 def grade_documents(state: GraphState) -> GraphState:
     docs = state.get("documents") or []
     if not docs:
+        return state
+
+    # For entity-style questions (name, passenger, traveller, etc.) keep all retrieved
+    # chunks to avoid accidentally filtering out the small snippet that contains the
+    # answer. The downstream answerer will decide what to extract.
+    q_lower = state["query"].lower()
+    if any(k in q_lower for k in ["name", "passenger", "traveller", "traveler"]):
+        logger.info("Skipping document grading for entity-style question.")
         return state
 
     llm = _get_llm()

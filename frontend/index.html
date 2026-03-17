@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Adaptive RAG Chatbot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="main.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    />
+  </head>
+  <body class="bg-gray-950 text-gray-100 h-screen overflow-hidden flex flex-col">
+    <div class="flex flex-col lg:flex-row w-full h-full p-4 gap-4">
+      <!-- Sidebar -->
+      <aside class="lg:w-72 w-full bg-gray-900 border border-gray-800 rounded-2xl p-4 flex flex-col gap-4 shadow-xl shadow-black/40 h-full">
+        <div>
+          <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wide">
+            Session
+          </h2>
+          <p
+            id="session-id"
+            class="mt-1 text-xs font-mono bg-gray-800 px-2 py-1 rounded border border-gray-700 break-all"
+          >
+            …
+          </p>
+        </div>
+
+        <div class="border-t border-gray-800 pt-4">
+          <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">
+            Upload documents
+          </h2>
+          <p class="text-xs text-gray-400 mb-2">
+            Upload a PDF or text file. Each browser tab has its own session.
+          </p>
+          <label
+            class="flex items-center justify-center px-3 py-2 border border-dashed border-indigo-500/60 rounded-xl cursor-pointer hover:border-indigo-400 hover:bg-gray-800 transition"
+          >
+            <span class="text-xs text-gray-300">Browse file</span>
+            <input id="file-input" type="file" class="hidden" accept=".pdf,.txt" />
+          </label>
+          <p id="upload-status" class="mt-2 text-xs text-gray-400"></p>
+        </div>
+
+        <div class="flex-1 border-t border-gray-800 pt-4 flex flex-col gap-3 overflow-hidden">
+          <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-1">
+            Chats
+          </h2>
+          <div
+            id="chat-list"
+            class="flex-1 overflow-y-auto space-y-1 pr-1 text-xs text-gray-300"
+          ></div>
+        </div>
+
+        <div class="border-t border-gray-800 pt-4 flex justify-between items-center">
+          <button
+            id="reset-btn"
+            class="text-xs px-3 py-1.5 rounded-lg border border-gray-700 text-gray-300 hover:bg-gray-800 transition"
+          >
+            Reset tab
+          </button>
+          <button
+            id="new-chat-btn"
+            class="text-xs px-3 py-1.5 rounded-lg border border-indigo-500 text-indigo-200 hover:bg-indigo-600/20 transition"
+          >
+            New chat
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main chat area -->
+      <main class="flex-1 bg-gray-950 border border-gray-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl shadow-black/50 h-full">
+        <header
+          class="px-5 py-3 border-b border-gray-800 flex items-center justify-between bg-gradient-to-r from-indigo-700 via-purple-700 to-gray-900"
+        >
+          <div>
+            <h1 class="text-lg font-semibold text-white">Adaptive RAG Chatbot</h1>
+            <p class="text-xs text-gray-400">
+              Documents • General Knowledge • Web Search
+            </p>
+          </div>
+          <div class="flex items-center gap-2 text-xs">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="route-indicator" class="text-gray-100 font-medium">Ready</span>
+          </div>
+        </header>
+
+        <section
+          id="messages"
+          class="flex-1 overflow-y-auto px-5 py-4 space-y-3 text-sm bg-gradient-to-b from-gray-900 via-gray-950 to-black"
+        ></section>
+
+        <form
+          id="chat-form"
+          class="border-t border-gray-800 px-4 py-3 flex flex-col gap-2 bg-gray-900"
+        >
+          <div class="flex items-end gap-2">
+            <textarea
+              id="chat-input"
+              rows="1"
+              placeholder="Ask me anything about your documents, general knowledge, or the web…"
+              class="flex-1 bg-gray-800 border border-gray-700 rounded-xl px-3 py-2 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400 resize-none"
+            ></textarea>
+            <button
+              id="send-btn"
+              type="submit"
+              class="px-4 py-2 rounded-xl bg-indigo-500 text-white text-sm font-medium hover:bg-indigo-400 disabled:opacity-50 disabled:cursor-not-allowed transition shadow-md shadow-indigo-800/50"
+            >
+              Send
+            </button>
+          </div>
+          <p class="text-[11px] text-gray-500">
+            The assistant adaptively routes each question through your documents, general LLM
+            knowledge, or real-time web search.
+          </p>
+        </form>
+      </main>
+    </div>
+  </body>
+</html>
+

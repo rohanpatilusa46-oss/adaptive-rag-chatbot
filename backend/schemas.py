@@ -36,3 +36,7 @@ class HealthResponse(BaseModel):
     vector_backend: Literal["qdrant", "faiss", "none"]
     mongo_connected: bool
 
+
+class NewSessionResponse(BaseModel):
+    session_id: str
+
