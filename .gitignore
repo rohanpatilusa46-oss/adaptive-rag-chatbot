@@ -1,0 +1,62 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# Environment variables (VERY IMPORTANT)
+.env
+*.env
+
+# Logs
+*.log
+logs/
+
+# Mac
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Database / local files
+*.db
+*.sqlite3
+
+# FAISS / vector store
+faiss_index/
+*.faiss
+*.pkl
+
+# Qdrant / local storage
+qdrant_storage/
+
+# Uploaded files
+uploads/
+data/
+
+# Cache
+.cache/
+
+# Node (if frontend exists)
+node_modules/
+.next/
+dist/
+build/
+
+# Misc
+*.tmp
+*.bak
