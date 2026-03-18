@@ -10,8 +10,6 @@ ENV_PATH = os.path.join(BASE_DIR, ".env")
 
 load_dotenv(dotenv_path=ENV_PATH)
 
-print("DEBUG ENV PATH:", ENV_PATH)
-print("DEBUG OPENAI KEY:", os.getenv("OPENAI_API_KEY"))
 
 class Settings(BaseModel):
     openai_api_key: str = Field(default_factory=lambda: os.getenv("OPENAI_API_KEY", ""))
