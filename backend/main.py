@@ -8,20 +8,20 @@ from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from .config import get_settings
-from .logging_config import setup_logging
-from .schemas import (
+from backend.config import get_settings
+from backend.logging_config import setup_logging
+from backend.schemas import (
     ChatRequest,
     ChatResponse,
     UploadResponse,
     HealthResponse,
     NewSessionResponse,
 )
-from .ingestion import ingest_document
-from .memory import append_message, get_history, mongo_available
-from .vectorstore import get_vectorstore
-from .graph.graph_builder import build_graph
-from .graph.state import GraphState
+from backend.ingestion import ingest_document
+from backend.memory import append_message, get_history, mongo_available
+from backend.vectorstore import get_vectorstore
+from backend.graph.graph_builder import build_graph
+from backend.graph.state import GraphState
 
 
 setup_logging()
