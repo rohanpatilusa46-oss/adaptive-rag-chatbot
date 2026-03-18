@@ -1,4 +1,4 @@
-const BACKEND_URL = window.BACKEND_URL || "http://localhost:8000";
+const BACKEND_URL = "https://adaptive-rag-chatbot-2.onrender.com";
 
 const sessionIdEl = document.getElementById("session-id");
 const messagesEl = document.getElementById("messages");
