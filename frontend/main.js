@@ -53,10 +53,10 @@ function renderChatList() {
     const active = id === sessionId;
     item.type = "button";
     item.className =
-      "w-full text-left px-2 py-1.5 rounded-lg border text-xs truncate " +
+      "w-full text-left px-3 py-2 rounded-xl border border-transparent text-xs truncate transition-all duration-200 " +
       (active
-        ? "bg-indigo-600/80 border-indigo-400 text-white"
-        : "bg-gray-900 border-gray-700 text-gray-300 hover:bg-gray-800");
+        ? "bg-indigo-500/20 border-indigo-500/30 text-white shadow-inner"
+        : "text-gray-400 hover:bg-white/5 hover:text-gray-200");
     item.textContent = conv.title || "Untitled chat";
     item.onclick = () => switchChat(id);
     chatListEl.appendChild(item);
@@ -118,16 +118,16 @@ function addMessage(role, content) {
 
 function renderMessageBubble(role, content) {
   const wrapper = document.createElement("div");
-  wrapper.className = "flex";
+  wrapper.className = "flex message-enter";
   wrapper.innerHTML = `
-    <div class="flex-1 max-w-full ${role === "user" ? "ml-auto" : "mr-auto"}">
-      <div class="text-[11px] mb-1 ${role === "user" ? "text-indigo-300 text-right" : "text-amber-300"}">
-        ${role === "user" ? "You" : "Assistant"}
+    <div class="flex-1 max-w-[85%] ${role === "user" ? "ml-auto" : "mr-auto"}">
+      <div class="text-[10px] mb-1.5 font-medium tracking-wide flex items-center gap-1.5 ${role === "user" ? "text-indigo-300 justify-end" : "text-gray-400"}">
+        ${role === "user" ? "You" : '<span class="w-4 h-4 rounded bg-purple-500/20 flex items-center justify-center text-[8px]">🤖</span> Assistant'}
       </div>
-      <div class="inline-block px-3 py-2 rounded-2xl text-sm leading-relaxed break-words ${
+      <div class="inline-block px-4 py-3 rounded-2xl text-[14px] leading-relaxed break-words shadow-sm ${
         role === "user"
-          ? "bg-indigo-600 text-white rounded-br-sm shadow-lg"
-          : "bg-gray-800 text-gray-100 border border-gray-700 rounded-bl-sm"
+          ? "msg-user text-white rounded-br-sm"
+          : "msg-bot text-gray-100 rounded-bl-sm"
       }">
         ${content}
       </div>

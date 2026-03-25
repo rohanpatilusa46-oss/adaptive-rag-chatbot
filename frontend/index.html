@@ -9,113 +9,136 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
     />
+    <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="bg-gray-950 text-gray-100 h-screen overflow-hidden flex flex-col">
-    <div class="flex flex-col lg:flex-row w-full h-full p-4 gap-4">
+  <body class="h-screen overflow-hidden flex flex-col antialiased">
+    <!-- Top Nav Glow -->
+    <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-400 via-indigo-500 to-purple-600 opacity-80 z-50"></div>
+
+    <div class="flex flex-col lg:flex-row w-full h-full p-4 md:p-6 gap-6 relative z-10 box-border">
       <!-- Sidebar -->
-      <aside class="lg:w-72 w-full bg-gray-900 border border-gray-800 rounded-2xl p-4 flex flex-col gap-4 shadow-xl shadow-black/40 h-full">
-        <div>
-          <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wide">
-            Session
-          </h2>
-          <p
-            id="session-id"
-            class="mt-1 text-xs font-mono bg-gray-800 px-2 py-1 rounded border border-gray-700 break-all"
-          >
-            …
-          </p>
+      <aside class="glass-panel lg:w-80 w-full rounded-3xl p-5 flex flex-col gap-6 h-full transition-all">
+        <div class="flex items-center gap-3 px-1">
+          <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+          </div>
+          <div>
+            <h2 class="text-sm font-bold text-gray-100 tracking-wide">
+              Session
+            </h2>
+            <p
+              id="session-id"
+              class="mt-0.5 text-[10px] font-mono text-indigo-300 break-all opacity-80"
+            >
+              …
+            </p>
+          </div>
         </div>
 
-        <div class="border-t border-gray-800 pt-4">
-          <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">
-            Upload documents
+        <div class="h-px w-full bg-gradient-to-r from-transparent via-gray-700 to-transparent opacity-50"></div>
+
+        <div class="px-1">
+          <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+            Documents
           </h2>
-          <p class="text-xs text-gray-400 mb-2">
-            Upload a PDF or text file. Each browser tab has its own session.
+          <p class="text-[11px] text-gray-400 mb-3 opacity-80 leading-relaxed">
+            Upload PDF/TXT context. Tab-specific session.
           </p>
           <label
-            class="flex items-center justify-center px-3 py-2 border border-dashed border-indigo-500/60 rounded-xl cursor-pointer hover:border-indigo-400 hover:bg-gray-800 transition"
+            class="mt-2 flex flex-col items-center justify-center px-4 py-6 border-2 border-dashed border-indigo-500/30 rounded-2xl cursor-pointer hover:border-indigo-400 hover:bg-white/5 transition duration-300 group"
           >
-            <span class="text-xs text-gray-300">Browse file</span>
+            <svg class="w-6 h-6 text-indigo-400/70 mb-2 group-hover:scale-110 transition group-hover:text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+            <span class="text-xs font-medium text-gray-300 group-hover:text-white transition">Browse file</span>
             <input id="file-input" type="file" class="hidden" accept=".pdf,.txt" />
           </label>
-          <p id="upload-status" class="mt-2 text-xs text-gray-400"></p>
+          <p id="upload-status" class="mt-3 text-[11px] text-center text-gray-400 font-medium"></p>
         </div>
 
-        <div class="flex-1 border-t border-gray-800 pt-4 flex flex-col gap-3 overflow-hidden">
-          <h2 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-1">
-            Chats
+        <div class="flex-1 flex flex-col gap-3 overflow-hidden px-1">
+          <div class="h-px w-full bg-gradient-to-r from-transparent via-gray-700 to-transparent opacity-50 mb-2"></div>
+          <h2 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
+            Recent Chats
           </h2>
           <div
             id="chat-list"
-            class="flex-1 overflow-y-auto space-y-1 pr-1 text-xs text-gray-300"
+            class="flex-1 overflow-y-auto space-y-1.5 pr-2.5 text-xs text-gray-300 stylish-scroll"
           ></div>
         </div>
 
-        <div class="border-t border-gray-800 pt-4 flex justify-between items-center">
-          <button
-            id="reset-btn"
-            class="text-xs px-3 py-1.5 rounded-lg border border-gray-700 text-gray-300 hover:bg-gray-800 transition"
-          >
-            Reset tab
-          </button>
-          <button
-            id="new-chat-btn"
-            class="text-xs px-3 py-1.5 rounded-lg border border-indigo-500 text-indigo-200 hover:bg-indigo-600/20 transition"
-          >
-            New chat
-          </button>
+        <div class="mt-auto px-1 pt-2">
+          <div class="h-px w-full bg-gradient-to-r from-transparent via-gray-700 to-transparent opacity-50 mb-4"></div>
+          <div class="flex justify-between items-center gap-3">
+            <button
+              id="reset-btn"
+              class="flex-1 text-xs px-3 py-2.5 rounded-xl border border-gray-600/50 text-gray-300 hover:bg-gray-800/80 hover:text-white transition-all font-medium"
+            >
+              Reset Tab
+            </button>
+            <button
+              id="new-chat-btn"
+              class="flex-1 text-xs px-3 py-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/20 hover:border-indigo-400 hover:text-indigo-200 transition-all font-medium"
+            >
+              New Chat
+            </button>
+          </div>
+          <!-- Backend Status appended cleanly at bottom -->
+          <div class="mt-4 flex justify-center">
+             <span id="backend-status" class="px-2 py-1 rounded-full text-[9px] uppercase tracking-wider font-semibold opacity-70">Detecting backend...</span>
+          </div>
         </div>
       </aside>
 
       <!-- Main chat area -->
-      <main class="flex-1 bg-gray-950 border border-gray-800 rounded-2xl flex flex-col overflow-hidden shadow-2xl shadow-black/50 h-full">
+      <main class="glass-panel flex-1 rounded-3xl flex flex-col overflow-hidden h-full relative">
         <header
-          class="px-5 py-3 border-b border-gray-800 flex items-center justify-between bg-gradient-to-r from-indigo-700 via-purple-700 to-gray-900"
+          class="px-6 py-4 glass-header flex items-center justify-between z-10"
         >
           <div>
-            <h1 class="text-lg font-semibold text-white">Adaptive RAG Chatbot</h1>
-            <p class="text-xs text-gray-400">
-              Documents • General Knowledge • Web Search
+            <h1 class="text-xl font-semibold text-white tracking-tight drop-shadow-sm">Adaptive RAG Chatbot</h1>
+            <p class="text-[11px] text-indigo-200/70 font-medium mt-0.5 tracking-wide uppercase">
+              Documents • Knowledge • Web Search
             </p>
           </div>
-          <div class="flex items-center gap-2 text-xs">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span id="route-indicator" class="text-gray-100 font-medium">Ready</span>
+          <div class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-black/20 border border-white/5 shadow-inner">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            <span id="route-indicator" class="text-xs text-gray-200 font-medium tracking-wide">Ready</span>
           </div>
         </header>
 
         <section
           id="messages"
-          class="flex-1 overflow-y-auto px-5 py-4 space-y-3 text-sm bg-gradient-to-b from-gray-900 via-gray-950 to-black"
-        ></section>
+          class="flex-1 overflow-y-auto px-4 md:px-8 py-6 space-y-6 text-sm relative z-0"
+        >
+          <!-- Messages will be injected here via main.js -->
+        </section>
 
         <form
           id="chat-form"
-          class="border-t border-gray-800 px-4 py-3 flex flex-col gap-2 bg-gray-900"
+          class="px-4 py-4 md:px-8 md:py-6 glass-header z-10"
         >
-          <div class="flex items-end gap-2">
+          <div class="flex items-end gap-3 relative max-w-4xl mx-auto">
             <textarea
               id="chat-input"
               rows="1"
-              placeholder="Ask me anything about your documents, general knowledge, or the web…"
-              class="flex-1 bg-gray-800 border border-gray-700 rounded-xl px-3 py-2 text-sm text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400 resize-none"
+              placeholder="Ask anything..."
+              class="flex-1 glass-input rounded-2xl px-5 py-3.5 text-sm text-gray-100 placeholder-gray-500 resize-none"
             ></textarea>
             <button
               id="send-btn"
               type="submit"
-              class="px-4 py-2 rounded-xl bg-indigo-500 text-white text-sm font-medium hover:bg-indigo-400 disabled:opacity-50 disabled:cursor-not-allowed transition shadow-md shadow-indigo-800/50"
+              class="btn-primary px-6 py-3.5 rounded-2xl text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center min-w-[100px]"
             >
               Send
             </button>
           </div>
-          <p class="text-[11px] text-gray-500">
-            The assistant adaptively routes each question through your documents, general LLM
-            knowledge, or real-time web search.
+          <p class="text-[10px] text-gray-500 text-center mt-3 tracking-wide">
+            Powered by Adaptive RAG technology.
           </p>
         </form>
       </main>
     </div>
   </body>
 </html>
-
